@@ -1,0 +1,23 @@
+# Table Example (Using Compound components)
+
+```jsx
+<Table data={data} columns={columns}>
+  <Table.Selection
+    mode={"single"}
+    selectedRowsIds={selectedRowsIds}
+    onSelectionChange={handleSelectionChange}
+  />
+
+  <Table.Sorting
+    mode={"multiple"}
+    disableSortRemove={true}
+    maxMultipleColumns={2}
+    sortings={[{ columnId: "creationDate", desc: true, sortIndex: 0 }]}
+    onSortingsChange={handleSortingChange}
+  >
+    <Table.Sorting.ColumnProps columnsId={"creationDate"} sortType={"date"} />
+  </Table.Sorting>
+
+  {/* More children components for the rest of the behaviours (if used) */}
+</Table>
+```

@@ -1,0 +1,59 @@
+import Svg from "../../components/Svg.tsx";
+import { ReactComponent as CounterEx3 } from "./counter-3.svg";
+
+# Avoiding drilling down too many props
+
+A counter is a kind a simple component but, we can see that as soon as we want
+to extend or customize the component we will have to add and propagate many
+properties
+
+## Using "Provider" pattern
+
+> Context provides a way to pass data through the component tree **without
+> having to pass props down** manually at every level. <cite>--
+> reactjs.org</cite>
+
+<div style={{ width: "100%", height: 700 }}>
+  <Svg>
+    <CounterEx3 />
+  </Svg>
+</div>
+
+### Creating the Counter Context Provider
+
+```jsx filename="CounterProvider.jsx" highlight="[3,7,8,9]"
+import { createContext } from "react";
+
+export const CounterContext = createContext({});
+
+const CounterProvider = ({ children, value = 0, onChange, min, max }) => {
+  return (
+    <CounterContext.Provider value={{ value, onChange, min, max }}>
+      {children}
+    </CounterContext.Provider>
+  );
+};
+
+export default CounterProvider;
+```
+
+### Creating the Counter Context Consumer (Hook)
+
+```js filename="useCounter.js" highlight="[5]"
+import { useContext } from "react";
+import { CounterContext } from "./CounterProvider";
+
+const useCounter = () => {
+  const context = useContext(CounterContext);
+
+  if (!context) {
+    throw new Error(
+      `Counter sub-components must be wrapped into "Counter" root component`
+    );
+  }
+
+  return context;
+};
+
+export default useCounter;
+```

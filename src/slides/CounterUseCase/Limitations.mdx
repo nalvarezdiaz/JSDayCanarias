@@ -1,0 +1,78 @@
+import Centered from "../../components/Centered.tsx";
+import Svg from "../../components/Svg.tsx";
+import { ReactComponent as CounterEx1 } from "./counter-1.svg";
+import { ReactComponent as CounterEx2 } from "./counter-2.svg";
+
+# Limitations
+
+> What would happen if we thought about generating **variants** of our base
+> component?
+
+## Move display position
+
+<div style={{ width: "100%", height: 100 }}>
+  <Svg>
+    <CounterEx1 />
+  </Svg>
+</div>
+
+```tsx filename="AllInCounter.jsx" diffAddLines="[2,7,11]" diffRemoveLines="[6]"
+<div>
+  {displayPosition === "start" && <BaseCounterDisplay value={value} />}
+  <BaseCounterButton mode={"decrement"} {...props}>
+    {decrementAdornment || <BiMinus />}
+  </BaseCounterButton>
+  <BaseCounterDisplay value={value} />
+  {displayPosition === "center" && <BaseCounterDisplay value={value} />}
+  <BaseCounterButton mode={"increment"} {...props}>
+    {incrementAdornment || <BiPlus />}
+  </BaseCounterButton>
+  {displayPosition === "end" && <BaseCounterDisplay value={value} />}
+</div>
+```
+
+## Add more handlers and more customization
+
+<div style={{ width: "100%", height: 200 }}>
+  <Svg>
+    <CounterEx2 />
+  </Svg>
+</div>
+
+```jsx filename="AllInCounter.jsx"
+<AllInCounter
+  value={value}
+  onChange={onChange}
+  min={0}
+  max={10}
+  items={[
+    {
+      type: "button",
+      mode: "decrement",
+      step: 2,
+      adornment: <MdOutlineExposureNeg2 />,
+    },
+    {
+      type: "button",
+      mode: "decrement",
+      step: 1,
+      adornment: <BiMinus />,
+    },
+    {
+      type: "display",
+    },
+    {
+      type: "button",
+      mode: "increment",
+      step: 1,
+      adornment: <MdOutlineExposurePlus2 />,
+    },
+    {
+      type: "button",
+      mode: "increment",
+      step: 2,
+      adornment: <BiPlus />,
+    },
+  ]}
+/>
+```

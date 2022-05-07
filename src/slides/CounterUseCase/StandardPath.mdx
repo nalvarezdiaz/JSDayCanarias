@@ -1,0 +1,97 @@
+import Playground from "../../components/Playground.tsx";
+import Svg from "../../components/Svg.tsx";
+import { ReactComponent as CounterStructure } from "./counter-structure.svg";
+
+# Building a Counter following the "standard" path
+
+<div style={{ width: "100%", height: 400, textAlign: "center" }}>
+  <Svg>
+    <CounterStructure />
+  </Svg>
+</div>
+
+import AllInBasicExample from "./AllInBasic.example.tsx";
+
+```jsx
+const AllInBasicExample = () => {
+  const [value, onChange] = useState(0);
+
+  return (
+    <AllInCounter
+      value={value}
+      onChange={onChange}
+      min={0}
+      max={10}
+      decrementAdornment={"Remove"}
+      incrementAdornment={"Add"}
+    />
+  );
+};
+```
+
+<Playground>
+  <AllInBasicExample />
+</Playground>
+
+### Inspecting AllInCounter component
+
+```jsx filename="AllInCounter.jsx"
+const AllInCounter = ({
+  value,
+  onChange,
+  min,
+  max,
+  decrementAdornment,
+  incrementAdornment,
+}) => {
+  const props = { value, onChange, min, max };
+
+  return (
+    <div>
+      <BaseCounterButton mode={"decrement"} {...props}>
+        {decrementAdornment || <BiMinus />}
+      </BaseCounterButton>
+      <BaseCounterDisplay value={value} />
+      <BaseCounterButton mode={"increment"} {...props}>
+        {incrementAdornment || <BiPlus />}
+      </BaseCounterButton>
+    </div>
+  );
+};
+```
+
+### BaseCounterButton
+
+```jsx filename="BaseCounterButton.jsx"
+const BaseCounterButton = ({
+  children,
+  mode,
+  step = 1,
+  value,
+  onChange,
+  min,
+  max,
+}) => {
+  const handleChange = useCallback(() => {
+    if (mode === "increment") {
+      return onChange(value + step);
+    }
+
+    return onChange(value - step);
+  }, [mode, step, value, onChange]);
+
+  const canChange = useMemo(() => {
+    if (mode === "increment") {
+      return max === undefined || value + step <= max;
+    }
+
+    return min === undefined || value - step >= min;
+  }, [mode, min, value, step]);
+
+  return (
+    <div className={cx({ disabled: !canChange })} onClick={handleChange}>
+      {children}
+    </div>
+  );
+};
+```

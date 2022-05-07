@@ -1,0 +1,41 @@
+import Playground from "../../components/Playground.tsx";
+import Slider1Example from "./Slider1.Example.tsx";
+
+# Slider Use Case
+
+> How many Thumbs can your Slider have?
+
+<Playground>
+  <Slider1Example />
+</Playground>
+
+```jsx
+const Slider1Example = () => {
+  const [thumb1, setThumb1] = useState(10);
+  const [thumb2, setThumb2] = useState(23);
+  const [thumb3, setThumb3] = useState(55);
+  const [thumb4, setThumb4] = useState(67);
+  const [thumb5, setThumb5] = useState(95);
+
+  const ranges = useMemo(() => {
+    const values = [thumb1, thumb2, thumb3, thumb4, thumb5].sort((a, b) =>
+      a < b ? -1 : 1
+    );
+
+    return values;
+  }, [thumb1, thumb2, thumb3, thumb4, thumb5]);
+
+  return (
+    <div>
+      <div>Values: {ranges.join(" - ")}</div>
+      <Slider min={0} max={100}>
+        <SliderThumb id={"thumb1"} value={thumb1} onChange={setThumb1} />
+        <SliderThumb id={"thumb2"} value={thumb2} onChange={setThumb2} />
+        <SliderThumb id={"thumb3"} value={thumb3} onChange={setThumb3} />
+        <SliderThumb id={"thumb4"} value={thumb4} onChange={setThumb4} />
+        <SliderThumb id={"thumb5"} value={thumb5} onChange={setThumb5} />
+      </Slider>
+    </div>
+  );
+};
+```

@@ -1,0 +1,100 @@
+import Svg from "../../components/Svg.tsx";
+import Playground from "../../components/Playground.tsx";
+import { ReactComponent as SelectStructure } from "./select-structure.svg";
+import Select1Example from "./Select1.example.tsx";
+import Select2Example from "./Select2.example.tsx";
+
+# Not always too easy
+
+<div style={{ width: "100%", height: 700 }}>
+  <Svg>
+    <SelectStructure />
+  </Svg>
+</div>
+
+## Saving label position to the context
+
+```jsx filename="SelectLabel.tsx" highlight="[5]"
+const SelectLabel = ({ children, position = "top" }) => {
+  const { onLabelPositionChange } = useSelect();
+
+  useEffect(() => {
+    onLabelPositionChange(position);
+  }, [position]);
+
+  return <div>{children}</div>;
+};
+```
+
+<Playground>
+  <Select1Example />
+</Playground>
+
+## Saving options to the context from SelectOption children
+
+```jsx filename="SelectOption.tsx" highlight="[6]"
+const SelectOption = ({ children, value, isDisabled = false }) => {
+  const { selectedValue, onOpenChange, onSelectedValueChange, registerOption } =
+    useSelect();
+
+  useEffect(() => {
+    registerOption({ value, label: children, isDisabled });
+  }, [registerOption, value, children]);
+
+  return (
+    <div
+      className={classNames({
+        selected: selectedValue === value,
+        disabled: isDisabled,
+      })}
+      onClick={() => {
+        onSelectedValueChange(value);
+        onOpenChange(false);
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+```
+
+<Playground>
+  <Select2Example />
+</Playground>
+
+## Picking children by type and defining the layout depending on the labelPosition
+
+This component renders all children even the options inside a hidden popover
+
+```jsx filename="SelectContent.tsx" highlight="[5,8,9,10,18,23]"
+const { isOpen, labelPosition, isReady, onReady } = useSelect();
+
+// This hook is executed after all children are mounted
+useEffect(() => {
+  onReady();
+}, []);
+
+const selectButton = getChildrenOfType(children, [SelectButton.name]);
+const selectLabel = getChildrenOfType(children, [SelectLabel.name]);
+const options = getChildrenOfType(children, [SelectOption.name]);
+
+return (
+  <div className={`label-${labelPosition}`}>
+    {selectLabel[0]}
+    <div {...triggerProps} style={{ display: "inline-block" }}>
+      {selectButton[0]}
+    </div>
+    {(!isReady || isOpen) &&
+      renderLayer(
+        <div
+          {...layerProps}
+          className={cx({
+            unmounted: !isReady,
+          })}
+        >
+          {options}
+        </div>
+      )}
+  </div>
+);
+```

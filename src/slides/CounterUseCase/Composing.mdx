@@ -1,0 +1,54 @@
+import Playground from "../../components/Playground.tsx";
+
+### CounterDisplay code
+
+```jsx filename="CounterDisplay.jsx" highlight="[2]"
+const CounterDisplay = () => {
+  const { value } = useCounter();
+
+  return <BaseCounterDisplay value={value} />;
+};
+```
+
+### CounterButton code
+
+```jsx filename="CounterButton.jsx" highlight="[2]"
+const CounterButton = ({ children, mode, step = 1 }) => {
+  const { value, onChange, min, max } = useCounter();
+  const props = { mode, step, value, onChange, min, max };
+
+  return <BaseCounterButton {...props}>{children}</BaseCounterButton>;
+};
+```
+
+# Composing
+
+```jsx filename="Counter2Example.jsx"
+<Counter value={value} onChange={onChange} min={0} max={10}>
+  <CounterButton mode={"decrement"} step={2}>
+    <MdOutlineExposureNeg2 />
+  </CounterButton>
+  <CounterButton mode={"decrement"}>
+    <BiMinus />
+  </CounterButton>
+
+  <CounterDisplay />
+
+  <CounterButton mode={"increment"}>
+    <BiPlus />
+  </CounterButton>
+  <CounterButton mode={"increment"} step={2}>
+    <MdOutlineExposurePlus2 />
+  </CounterButton>
+</Counter>
+```
+
+import Counter1Example from "./Counter1.example.tsx";
+import Counter2Example from "./Counter2.example.tsx";
+import Counter3Example from "./Counter3.example.tsx";
+
+<Playground>
+  Example 1: <Counter1Example />
+  Example 2: <Counter2Example />
+  Example 3: <Counter3Example />
+</Playground>

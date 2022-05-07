@@ -1,0 +1,18 @@
+import Playground from "../../components/Playground.tsx";
+import ListExample from "./List.example.tsx";
+
+# Why we use "Compound Components"?
+
+```jsx
+<List>
+  <ListItem id={"dan-abramov"} isSelected={true}>
+    Dan Abramov
+  </ListItem>
+  <ListItem id={"john-dalton"}>John-David Dalton</ListItem>
+  <ListItem id={"kent-c-dodds"}>Kent C. Dodds</ListItem>
+</List>
+```
+
+<Playground>
+  <ListExample />
+</Playground>

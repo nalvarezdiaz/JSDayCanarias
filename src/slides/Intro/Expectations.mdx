@@ -1,0 +1,40 @@
+import Playground from "../../components/Playground.tsx";
+import CompoundComponentsExample from "./CompoundComponents.example.tsx";
+
+# Compound Components pattern's "expectations"?
+
+Normally this pattern increases the complexity of development by having several
+components that must interact with each other, and under certain behavior. But
+it maintains a more **friendly and readable interface**.
+
+```jsx
+const [lng, setLng] = useState("javascript");
+
+<Select value={lng} onChange={setLng}>
+  <SelectLabel className={"select-label-style"} position={"top"}>
+    Choose a language:
+  </SelectLabel>
+  <SelectButton />
+
+  <SelectOption value={"javascript"}>
+    <PythonIcon />
+    <span>Javascript</span>
+  </SelectOption>
+  <SelectOption value={"python"}>
+    <JSIcon />
+    <span>Python</span>
+  </SelectOption>
+  <SelectOption value={"c/c++"} isDisabled={true}>
+    <CPlusPlusIcon />
+    <span>C/C++</span>
+  </SelectOption>
+  <SelectOption value={"rust"}>
+    <RustIcon />
+    <span>Rust</span>
+  </SelectOption>
+</Select>;
+```
+
+<Playground>
+  <CompoundComponentsExample />
+</Playground>

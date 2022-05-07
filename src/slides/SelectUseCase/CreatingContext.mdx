@@ -1,0 +1,23 @@
+import Svg from "../../components/Svg.tsx";
+import { ReactComponent as SelectSchema } from "./select-schema.svg";
+
+# What will our context have?
+
+<div style={{ width: "100%", height: 600, textAlign: "center" }}>
+  <Svg>
+    <SelectSchema />
+  </Svg>
+</div>
+
+- **`open`**: shows of hides the options panel.
+- **`labelPosition`**: saves the current label position because the
+  `SelectLabel` subcomponent does not know how to be positioned in the
+  `SelectContent` layout.
+- **`selectedValue`**: saves the current selected value, not the entire option
+  with the label.
+- **`options`**: saves all the options registered via `SelectOption`
+  subcomponent.
+- **`isReady`**: isReady is set to true after mounting all subcomponents. Needed
+  to do a little trick because the options wouldn't be mounted until the popover
+  is opened, but we wouldn't have options at the initial time because they
+  haven't been mounted

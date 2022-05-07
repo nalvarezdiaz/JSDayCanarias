@@ -1,0 +1,23 @@
+# Table Example (In not elegant way)
+
+```jsx
+<Table
+  data={data}
+  columns={columns}
+  // logic for columns data type, renders...
+  // logic for selection
+  selectionMode={"single"}
+  selectedRowsIds={selectedRowsIds}
+  onSelectionChange={handleSelectionChange}
+  // logic for sorting
+  sortingMode={"multiple"}
+  disableSortRemove={true}
+  maxSortedMultipleColumns={2}
+  sortings={[{ columnId: "creationDate", desc: true, sortIndex: 0 }]}
+  onSortingsChange={handleSortingChange}
+  sortingColumnsProps={[{ columnId: "creationDate", sortType: "date" }]}
+  // logic for filtering...
+  // logic for pagination...
+  // logic for grouping...
+/>
+```

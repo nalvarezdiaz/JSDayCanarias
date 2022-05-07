@@ -1,0 +1,17 @@
+import Playground from "../../components/Playground.tsx";
+import SelectableListExample from "./SelectableList.example.tsx";
+
+# Why we use "Compound Components"?
+
+```jsx highlight="[1,5]"
+<SelectableList selectedItems={selectedItems} onSelectionChange={handleChange}>
+  <ListItem id={"dan-abramov"}>Dan Abramov</ListItem>
+  <ListItem id={"john-dalton"}>John-David Dalton</ListItem>
+  <ListItem id={"kent-c-dodds"}>Kent C. Dodds</ListItem>
+  <ListSelection />
+</SelectableList>
+```
+
+<Playground>
+  <SelectableListExample />
+</Playground>

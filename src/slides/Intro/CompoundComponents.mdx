@@ -1,0 +1,93 @@
+import Playground from "../../components/Playground.tsx";
+
+# From what we would like it to be...
+
+Think in a menu selector in plain HTML, it should look like this:
+
+```html
+<label for="language">Choose a language: </label>
+<select name="lang" id="language" defaultValue="rust">
+  <option value="javascript">Javascript</option>
+  <option value="python">Python</option>
+  <option value="c/c++">C/C++</option>
+  <option value="rust">Rust</option>
+</select>
+```
+
+<Playground>
+  <label htmlFor="language">Choose a language: </label>
+  <select name="lang" id="language" defaultValue="rust">
+    <option value="javascript">Javascript</option>
+    <option value="python">Python</option>
+    <option value="c/c++">C/C++</option>
+    <option value="rust">Rust</option>
+  </select>
+</Playground>
+
+# ...to what we actually use in React
+
+Now think about how selectors usually work in React.
+
+```jsx
+<Select
+  items={[
+    { label: "Python", value: "python" },
+    { label: "Javascript", value: "javascript" },
+    { label: "C/C++", value: "c/c++" },
+    { label: "Rust", value: "rust" },
+  ]}
+  value={"rust"}
+  onChange={handleChange}
+/>
+```
+
+# ...even worse
+
+All the properties and the responsibility lies into a single component.
+
+```jsx
+<Select
+  classes={{
+    label: "select-label-style",
+  }}
+  label={"Choose a language:"}
+  labelPosition={"top"}
+  items={[
+    {
+      label: (
+        <div>
+          <PythonIcon /> Python
+        </div>
+      ),
+      value: "python",
+    },
+    {
+      label: (
+        <div>
+          <JSIcon /> Javascript
+        </div>
+      ),
+      value: "javascript",
+    },
+    {
+      label: (
+        <div>
+          <CPlusPlusIcon /> C/C++
+        </div>
+      ),
+      value: "c/c++",
+      isDisabled: true,
+    },
+    {
+      label: (
+        <div>
+          <RustIcon /> Rust
+        </div>
+      ),
+      value: "rust",
+    },
+  ]}
+  value={"rust"}
+  onChange={handleChange}
+/>
+```
